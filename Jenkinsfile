@@ -1,6 +1,6 @@
 pipeline {
     agent { label 'GOL' }
-    trigger {
+    triggers {
         cron('H * * * *')
         pollSCM('* * * * *')
     }
