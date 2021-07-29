@@ -1,14 +1,21 @@
-node('GOL') {
-    stage('scm') {
-        git 'https://github.com/srikz783/game-of-life.git'
+pipeline {
+    agent { label 'GOL' }
+    stages {
+        stage('SCM') {
+            steps {
+                git branch: 'master', url: 'https://github.com/srikz783/game-of-life.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn package'
+            }
+        }
     }
-    stage('Build') {
-        sh 'mvn package'
-    }
-    stage('postBuild') {
-        junit '**/TEST-*.xml'
-        archive '**/*.war'
+    post {
+        success {
+            archive '**/*.war'
+            junit '**/TEST-*.xml'
+        }
     }
 }
-
-// game of life
