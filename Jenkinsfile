@@ -13,7 +13,7 @@ pipeline {
         }
         stage('PostBuild'){
             steps {
-                archive '**/gameoflife.war'
+                artifacts '**/gameoflife.war'
                 junit '**/TEST-*.xml'
             }
         }
