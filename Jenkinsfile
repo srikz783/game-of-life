@@ -1,5 +1,5 @@
 pipeline{
-    agent { label 'SPC'}
+    agent any
     triggers {
         pollSCM('* * * * *')
     }
@@ -11,7 +11,7 @@ pipeline{
         }
         stage('build') {
             steps {
-                sh "mvn package"
+                sh 'mvn package'
             }
         }
     }
