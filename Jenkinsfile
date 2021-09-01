@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'GOL' }
+    agent { label 'SPC' }
     stages {
         stage('SCM'){
             steps {
