@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('SCM'){
             steps {
-                mail subject: 'Build started' +env.BUILD.ID, from: 'jenkins@gmail.com' to: 'ksrikanth0293@gmail.com' body: 'empty'
+                mail subject: 'Build started' +env.BUILD.ID, from: 'jenkins@gmail.com', to: 'ksrikanth0293@gmail.com', body: 'empty'
                 git branch: "${params.BRANCH}", url: 'https://github.com/srikz783/game-of-life.git'
             }
         }
