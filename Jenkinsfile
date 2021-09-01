@@ -1,15 +1,12 @@
-pipeline{
-    agent any
-    triggers {
-        pollSCM('* * * * *')
-    }
+pipeline {
+    agent { label 'GOL' }
     stages {
-        stage('scm') {
+        stage('SCM') {
             steps {
                 git 'https://github.com/srikz783/game-of-life.git'
             }
         }
-        stage('build') {
+        stage('COMPILE'){
             steps {
                 sh 'mvn package'
             }
