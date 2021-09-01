@@ -15,7 +15,7 @@ pipeline {
         }
         stage('COMPILE'){
             steps {
-                sh 'mvn package'
+                sh "${params.GOAL}"
             }
         }
         stage('PostBuild'){
