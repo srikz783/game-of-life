@@ -1,5 +1,8 @@
 pipeline {
     agent { label 'SPC' }
+    triggers {
+        pollSCM ('* * * * *')
+    }
     stages {
         stage('SCM'){
             steps {
@@ -13,7 +16,7 @@ pipeline {
         }
         stage('PostBuild'){
             steps {
-                artifacts '**/gameoflife.war'
+                archive '**/gameoflife.war'
                 junit '**/TEST-*.xml'
             }
         }
