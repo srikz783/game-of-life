@@ -15,7 +15,7 @@ pipeline {
         }
         stage('build'){
             steps {
-                echo env.GIT.URL
+                echo env.GIT_URL
                 sh "mvn ${params.GOAL}"
             }
         }
