@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('SCM'){
             steps {
-                git branch: ${params.BRANCH}, url: 'https://github.com/srikz783/game-of-life.git'
+                git branch: "${params.BRANCH}", url: 'https://github.com/srikz783/game-of-life.git'
             }
         }
         stage('COMPILE'){
