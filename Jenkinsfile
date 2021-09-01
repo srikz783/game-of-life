@@ -3,6 +3,10 @@ pipeline {
     triggers {
         pollSCM ('* * * * *')
     }
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'master', description: 'branch to build' )
+        choice(name: 'GOAL', choices: ['package', 'clean package', 'install'], description: 'maven goals')
+    }
     stages {
         stage('SCM'){
             steps {
