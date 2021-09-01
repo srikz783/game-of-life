@@ -9,7 +9,7 @@ pipeline{
                 git 'https://github.com/srikz783/game-of-life.git'
             }
         }
-        stage('Build') {
+        stage('build') {
             steps {
                 sh 'mvn package'
             }
