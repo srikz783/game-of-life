@@ -13,8 +13,9 @@ pipeline {
                 git branch: "${params.BRANCH}", url: 'https://github.com/srikz783/game-of-life.git'
             }
         }
-        stage('COMPILE'){
+        stage('build'){
             steps {
+                echo env.GIT.URL
                 sh "mvn ${params.GOAL}"
             }
         }
