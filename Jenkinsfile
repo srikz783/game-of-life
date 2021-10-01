@@ -30,5 +30,6 @@ pipeline {
         success {
             archive '**/gameoflife.war'
             junit '**/TEST-*.xml'
+        }
     }
 }
