@@ -1,37 +1,44 @@
 pipeline {
-
-    agent { label 'GOL'}
+    agent { label 'GOL' }
     triggers {
-        pollSCM('* * * * *')
+        pollSCM ('* * * * *')
     }
     parameters {
-        string(name: 'BRANCH', defaultValue: 'master', description: 'Branch to build' )
+        string(name: 'BRANCH', defaultValue: 'master', description: 'branch to build' )
         choice(name: 'GOAL', choices: ['package', 'clean package', 'install'], description: 'maven goals')
     }
     stages {
-        stage('scm') {
+        stage('SCM'){
             steps {
-                git branch: "${params.BRANCH}", url: 'https://github.com/asquarezone/game-of-life.git'
-                //input message: 'Continue to next stage? ', submitter: 'qtaws,qtazure'
-                echo env.CI_ENV
-                echo env.DUMMY
+                git branch: "${params.BRANCH}", url: 'https://github.com/srikz783/game-of-life.git'
             }
         }
-        stage('build') {
+        stage('build'){
             steps {
-                echo env.GIT_URL
-                timeout(time:20, unit: 'MINUTES') {
-                    sh "mvn ${params.GOAL}"
+                echo env.GIT_URL {
+                sh "mvn ${params.GOAL}"
+                stash includes: '**/gameoflife.war', name: 'golwar'
                 }
                 
             }
         }
-        stage('Ansible') {
+        stage('devserver'){
             agent { label 'DEV'}
-            steps{
-                // requires SonarQube Scanner for Maven 3.2+
-                    sh 'cd Ansible && cd lampserver && ansible-playbook -i hosts apache.yaml'
-                }
+            steps {
+                unstash name: 'golwar'
+            }
+        }
+        stage('PostBuild'){
+            steps {
+                archive '**/gameoflife.war'
+                junit '**/TEST-*.xml'
             }
         }
     }
+    post {
+        success {
+            archive '**/gameoflife.war'
+            junit '**/TEST-*.xml'
+        }
+    }
+}
