@@ -15,10 +15,11 @@ pipeline {
         }
         stage('build'){
             steps {
-                echo env.GIT_URL
+                echo env.GIT_URL {
                 sh "mvn ${params.GOAL}"
                 }
                 stash includes: '**/gameoflife.war', name: 'golwar'
+            }
         }
         stage('devserver'){
             agent { label 'DEV'}
