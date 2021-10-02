@@ -18,13 +18,14 @@ pipeline {
                 echo env.GIT_URL {
                 sh "mvn ${params.GOAL}"
                 }
-                stash includes: '**/gameoflife.war', name: 'golwar'
             }
         }
         stage('devserver'){
             agent { label 'DEV'}
-            steps {
-                unstash name: 'golwar'
+           steps{
+                // requires SonarQube Scanner for Maven 3.2+
+                    sh 'cd Ansible && cd lampserver && ansible-playbook -i hosts apache.yaml'
+                }
             }
         }
         stage('PostBuild'){
