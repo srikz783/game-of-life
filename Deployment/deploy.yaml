@@ -1,0 +1,7 @@
+hosts: all
+become: yes
+tasks:
+  - name: copy war file to tomcat
+    copy:
+      src: /opt/playbooks/gameoflife-web/target/gameoflife.war
+      dest: /opt/tomcat/webapps
