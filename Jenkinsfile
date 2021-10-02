@@ -17,15 +17,13 @@ pipeline {
             steps {
                 echo env.GIT_URL {
                 sh "mvn ${params.GOAL}"
-                stash includes: '**/gameoflife.war', name: 'golwar'
-                }
-                
+                } 
             }
         }
         stage('devserver'){
             agent { label 'DEV'}
             steps {
-                unstash name: 'golwar'
+                echo env.GIT_URL
             }
         }
         stage('PostBuild'){
