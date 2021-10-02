@@ -1,42 +1,51 @@
 pipeline {
-    agent { label 'GOL' }
+
+    agent { label 'GOL'}
     triggers {
-        pollSCM ('* * * * *')
+        pollSCM('* * * * *')
     }
     parameters {
-        string(name: 'BRANCH', defaultValue: 'master', description: 'branch to build' )
+        string(name: 'BRANCH', defaultValue: 'master', description: 'Branch to build' )
         choice(name: 'GOAL', choices: ['package', 'clean package', 'install'], description: 'maven goals')
     }
+    environment {
+        CI_ENV = 'DEV'
+    }
     stages {
-        stage('SCM'){
+        stage('scm') {
+            environment {
+                DUMMY = 'FUN'
+            }
             steps {
-                git branch: "${params.BRANCH}", url: 'https://github.com/srikz783/game-of-life.git'
+                git branch: "${params.BRANCH}", url: 'https://github.com/asquarezone/game-of-life.git'
+                //input message: 'Continue to next stage? ', submitter: 'qtaws,qtazure'
+                echo env.CI_ENV
+                echo env.DUMMY
             }
         }
-        stage('build'){
-            steps {
-                echo env.GIT_URL {
-                sh "mvn ${params.GOAL}"
-                } 
-            }
-        }
-        stage('devserver'){
-            agent { label 'DEV'}
+        stage('build') {
             steps {
                 echo env.GIT_URL
+                timeout(time:10, unit: 'MINUTES') {
+                    sh "mvn ${params.GOAL}"
+                }
+                
             }
         }
-        stage('PostBuild'){
-            steps {
-                archive '**/gameoflife.war'
-                junit '**/TEST-*.xml'
+        stage('Ansible') {
+            agent { label 'DEV'}
+            steps{
+                // requires SonarQube Scanner for Maven 3.2+
+                    sh 'cd Deployment && ansible-playbook -i hosts deploy.yaml'
+                }
             }
-        }
+        
     }
     post {
         success {
             archive '**/gameoflife.war'
             junit '**/TEST-*.xml'
         }
+        
     }
 }
