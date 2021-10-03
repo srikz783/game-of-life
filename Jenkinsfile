@@ -37,7 +37,7 @@ pipeline {
             steps{
                 // requires SonarQube Scanner for Maven 3.2+
                     unstash name: 'golwar'
-                    sh cd '/home/jenkins/game-of-life/Deployment/tomcat9' && ansible-playbook -i hosts tomcat9-deploy.yaml 
+                    sh cd 'game-of-life' && cd 'Deployment' && cd 'tomcat9' && ansible-playbook -i hosts tomcat9-deploy.yaml 
                 }
             }
         
