@@ -28,6 +28,7 @@ pipeline {
                 echo env.GIT_URL
                 timeout(time:10, unit: 'MINUTES') {
                     sh "mvn ${params.GOAL}"
+                    stash includes: '**/gameoflife.war' name: 'golwar'
                 }
                 
             }
@@ -36,7 +37,7 @@ pipeline {
             agent { label 'DEV'}
             steps{
                 // requires SonarQube Scanner for Maven 3.2+
-                    sh 'cd Deployment && ansible-playbook -i hosts deploy.yaml'
+                    unstash name: 'golwar'
                 }
             }
         
