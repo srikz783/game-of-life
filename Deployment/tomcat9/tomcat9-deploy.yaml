@@ -53,6 +53,10 @@
         owner: "{{ tomcat_group }}"
         state: directory
       loop: "{{ tomcat_directories_for_group_permissions }}"
+    - name: copy war file to tomcat
+      copy:
+        src: /home/jenkins/jenkins_root/workspace/gol-pipeline/gameoflife-web/target/gameoflife.war
+        dest: /opt/tomcat/webapps
     - name: copy the tomcat service
       template:
         src: tomcat.service.j2
