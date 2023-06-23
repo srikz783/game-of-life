@@ -4,9 +4,6 @@ pipeline {
     triggers {
         pollSCM('* * * * *')
     }
-    tools {
-        java 'JAVA_8'
-    }
     
     stages {
         stage('build') {
