@@ -4,7 +4,9 @@ pipeline {
     triggers {
         pollSCM('* * * * *')
     }
-    JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+    tools {
+        java 'JAVA_8'
+    }
     
     stages {
         stage('build') {
