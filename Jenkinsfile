@@ -1,6 +1,6 @@
 pipeline {
 
-    agent { label 'GOL'}
+    agent any
     triggers {
         pollSCM('* * * * *')
     }
