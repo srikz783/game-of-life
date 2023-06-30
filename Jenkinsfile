@@ -12,19 +12,20 @@ pipeline {
             }
         }
 
-        stage ('Docker') {
-            steps {
-                sh 'cd springboot/gameoflife-web'
-                sh 'docker build -t gameoflife .'
-                sh 'docker run -d -p 5000:5000 gameoflife'
-            }
-        }
+        
             
         stage('post build') {
             steps {
                 archiveArtifacts artifacts: '**/target/gameoflife.war',
                                  onlyIfSuccessful: true
                 junit testResults: '**/surefire-reports/TEST-*.xml'
+            }
+        }
+        stage ('Docker') {
+            steps {
+               // sh 'cd gameoflife-web'
+                sh 'docker build --no-cache . -f gameoflife-web/Dockerfile'
+                sh 'docker run -d -p 5000:5000 gameoflife'
             }
         }
         
