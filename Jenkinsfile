@@ -12,12 +12,13 @@ pipeline {
             }
         }
 
-        stage ('Docker')
+        stage ('Docker') {
             steps {
                 sh 'docker build '
                 sh 'docker build -t gameoflife .'
                 sh 'docker run -d -p 5000:5000 gameoflife'
             }
+        }
             
         stage('post build') {
             steps {
