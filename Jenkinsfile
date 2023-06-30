@@ -14,7 +14,7 @@ pipeline {
 
         stage ('Docker') {
             steps {
-                sh 'chmod 755 springboot'
+                //sh 'chmod 755 springboot'
                 sh 'docker build -t gameoflife .'
                 sh 'docker run -d -p 5000:5000 gameoflife'
             }
