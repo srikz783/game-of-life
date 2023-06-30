@@ -1,4 +1,5 @@
-FROM tomcat:jdk8
-LABEL author="srikanth"
+FROM tomcat:8-jre8
+RUN rm -rf /usr/local/tomcat/webapps/*
+COPY target/gameoflife.war /usr/local/tomcat/webapps/ROOT.war
 EXPOSE 8080
-ADD target/gameoflife.war /usr/local/tomcat/webapps/gameoflife.war
+CMD ["catalina.sh", "run"]
