@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'GOL' }
+    agent any
     stages {
         stage('VCS') {
             steps {
