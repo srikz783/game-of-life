@@ -1,18 +1,11 @@
 pipeline {
     agent any
 
-   tools {
-       maven 'MAVEN-3.3.3'
-   }
     stages {
-        stage('VCS') {
-            steps {
-                git 'https://github.com/wakaleo/game-of-life.git'
-            }
-        }
         stage('build') {
             steps {
-                sh 'export PATH="/usr/lib/jvm/java-1.8.0-openjdk-amd64/bin:$PATH" && mvn package'
+                //sh 'export PATH="/usr/lib/jvm/java-1.8.0-openjdk-amd64/bin:$PATH" && mvn package'
+                sh 'mvn package'
             }
         }
 
