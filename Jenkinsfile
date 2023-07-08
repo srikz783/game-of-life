@@ -1,7 +1,8 @@
 pipeline {
     agent any
 
-   
+   tools {
+       mvn 'MAVEN-3.3.3'
     stages {
         stage('VCS') {
             steps {
