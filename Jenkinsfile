@@ -1,5 +1,9 @@
 pipeline {
     agent any
+
+    tools {
+        mvn 'MAVEN'
+    }
     stages {
         stage('VCS') {
             steps {
