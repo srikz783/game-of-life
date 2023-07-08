@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        mvn 'MAVEN'
+        mvn "MAVEN"
     }
     stages {
         stage('VCS') {
