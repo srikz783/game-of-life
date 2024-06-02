@@ -23,6 +23,7 @@ pipeline {
                // sh 'cd gameoflife-web'
                 sh 'docker build --no-cache . -f gameoflife-web/Dockerfile'
                 sh 'docker run -d -p 5000:5000 gameoflife'
+                sh 'whoami'
             }
         }
         
